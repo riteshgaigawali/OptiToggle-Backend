@@ -26,31 +26,47 @@ public class UserController {
 
     // Get all user details.
     @GetMapping("/users")
-    public List<User> getAllUser() {
+    public ResponseEntity<List<User>> getAllUser() {
 
-        return this.userService.getAllUsers();
+        try {
+            return new ResponseEntity<>(this.userService.getAllUsers(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 
     // Get user by id.
     @GetMapping("users/{userid}")
-    public User getUserById(@PathVariable int userid) {
+    public ResponseEntity<User> getUserById(@PathVariable int userid) {
 
-        return this.userService.getUserById(userid);
+        try {
+            return new ResponseEntity<>(this.userService.getUserById(userid), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Add user.
     @PostMapping("/users")
-    public User addUser(@RequestBody User user) {
+    public ResponseEntity<User> addUser(@RequestBody User user) {
 
-        return this.userService.addUser(user);
+        try {
+            return new ResponseEntity<>(this.userService.addUser(user), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Update user
     @PutMapping("/users/{userid}")
-    public User updateUser(@RequestBody User user, @PathVariable int userid) {
+    public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable int userid) {
 
-        return this.userService.updateUser(user, userid);
+        try {
+            return new ResponseEntity<>(this.userService.updateUser(user, userid), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // // Delete user

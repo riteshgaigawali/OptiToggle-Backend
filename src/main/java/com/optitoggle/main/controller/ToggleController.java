@@ -26,31 +26,47 @@ public class ToggleController {
 
     // Get all toggle details.
     @GetMapping("/toggle")
-    public List<Toggle> getAllToggle() {
+    public ResponseEntity<List<Toggle>> getAllToggle() {
 
-        return this.toggleService.getAllToggle();
+        try {
+            return new ResponseEntity<>(this.toggleService.getAllToggle(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 
     // Get toggle by id.
     @GetMapping("toggle/{flagId}")
-    public Toggle getToggleById(@PathVariable int flagId) {
+    public ResponseEntity<Toggle> getToggleById(@PathVariable int flagId) {
 
-        return this.toggleService.getToggleById(flagId);
+        try {
+            return new ResponseEntity<>(this.toggleService.getToggleById(flagId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Add toggle.
     @PostMapping(path = "/toggle", consumes = "application/json")
-    public Toggle addToggle(@RequestBody Toggle toggle) {
+    public ResponseEntity<Toggle> addToggle(@RequestBody Toggle toggle) {
+        try {
+            return new ResponseEntity<>(this.toggleService.addToggle(toggle), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-        return this.toggleService.addToggle(toggle);
     }
 
     // Update toggle
     @PutMapping("/toggle/{flagId}")
-    public Toggle updateToggle(@RequestBody Toggle toggle, @PathVariable int flagId) {
+    public ResponseEntity<Toggle> updateToggle(@RequestBody Toggle toggle, @PathVariable int flagId) {
+        try {
+            return new ResponseEntity<>(this.toggleService.updateToggle(toggle, flagId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-        return this.toggleService.updateToggle(toggle, flagId);
     }
 
     // // Delete toggle
