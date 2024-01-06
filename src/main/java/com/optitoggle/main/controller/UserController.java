@@ -1,7 +1,6 @@
 package com.optitoggle.main.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,7 @@ public class UserController {
 
     // Get user by id.
     @GetMapping("users/{userid}")
-    public Optional<User> getUserById(@PathVariable int userid) {
+    public User getUserById(@PathVariable int userid) {
 
         return this.userService.getUserById(userid);
     }
@@ -46,10 +45,10 @@ public class UserController {
     }
 
     // Update user
-    @PutMapping("/users")
-    public User updateUser(@RequestBody User user) {
+    @PutMapping("/users/{userid}")
+    public User updateUser(@RequestBody User user, @PathVariable int userid) {
 
-        return this.userService.updateUser(user);
+        return this.userService.updateUser(user, userid);
     }
 
     // // Delete user

@@ -1,7 +1,6 @@
 package com.optitoggle.main.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,7 @@ public class ToggleController {
 
     // Get toggle by id.
     @GetMapping("toggle/{flagId}")
-    public Optional<Toggle> getToggleById(@PathVariable int flagId) {
+    public Toggle getToggleById(@PathVariable int flagId) {
 
         return this.toggleService.getToggleById(flagId);
     }
@@ -46,10 +45,10 @@ public class ToggleController {
     }
 
     // Update toggle
-    @PutMapping("/toggle")
-    public Toggle updateToggle(@RequestBody Toggle toggle) {
+    @PutMapping("/toggle/{flagId}")
+    public Toggle updateToggle(@RequestBody Toggle toggle, @PathVariable int flagId) {
 
-        return this.toggleService.updateToggle(toggle);
+        return this.toggleService.updateToggle(toggle, flagId);
     }
 
     // // Delete toggle

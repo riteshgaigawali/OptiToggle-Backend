@@ -1,7 +1,6 @@
 package com.optitoggle.main.services;
 
 import java.util.List;
-import java.util.Optional;
 import com.optitoggle.main.entities.User;
 
 public interface UserService {
@@ -11,13 +10,13 @@ public interface UserService {
     public List<User> getAllUsers();
 
     // Return toggle with specified id.
-    public Optional<User> getUserById(int userid);
+    public User getUserById(int userid);
 
     // Add toggle to the database.
     public User addUser(User user);
 
     // Update toggle.
-    public User updateUser(User user);
+    public User updateUser(User user, int userid);
 
     // Delete toggle from database.
     public void deleteUser(int userid);

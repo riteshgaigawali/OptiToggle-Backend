@@ -1,7 +1,6 @@
 package com.optitoggle.main.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.optitoggle.main.entities.Toggle;
 
@@ -13,13 +12,13 @@ public interface ToggleService {
     public List<Toggle> getAllToggle();
 
     // Return toggle with specified id.
-    public Optional<Toggle> getToggleById(int flagId);
+    public Toggle getToggleById(int flagId);
 
     // Add toggle to the database.
     public Toggle addToggle(Toggle toggle);
 
     // Update toggle.
-    public Toggle updateToggle(Toggle toggle);
+    public Toggle updateToggle(Toggle toggle, int flagId);
 
     // Delete toggle from database.
     public void deleteToggle(int flagId);
