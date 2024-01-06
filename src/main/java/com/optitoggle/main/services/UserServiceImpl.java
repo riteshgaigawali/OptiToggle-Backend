@@ -49,7 +49,9 @@ public class UserServiceImpl implements UserService {
     // deleteUser mehtod impl
     @Override
     public void deleteUser(int userid) {
-        userDao.deleteById(userid);
+        User user = userDao.findById(userid)
+                .orElseThrow(() -> (new ResourceNotFoundEexception("User", "userid", userid)));
+        userDao.deleteById(user.getUserid());
     }
 
 }

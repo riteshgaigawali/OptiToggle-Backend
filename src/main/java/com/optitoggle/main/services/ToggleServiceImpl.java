@@ -54,7 +54,9 @@ public class ToggleServiceImpl implements ToggleService {
     // // deleteToggle mehtod impl
     @Override
     public void deleteToggle(int flagId) {
-        toggleDao.deleteById(flagId);
+        Toggle toggle = toggleDao.findById(flagId)
+                .orElseThrow(() -> (new ResourceNotFoundEexception("Toggle", "flagId", flagId)));
+        toggleDao.deleteById(toggle.getFlagId());
     }
 
 }
