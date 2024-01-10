@@ -1,22 +1,22 @@
 package com.optitoggle.main.services;
 
 import java.util.List;
-import com.optitoggle.main.entities.User;
+import com.optitoggle.main.payloads.UserDto;
 
 public interface UserService {
     // Find implementation of this methods in UserServiceImpl.java file.
 
     // Returns all toggle at once.
-    public List<User> getAllUsers();
+    public List<UserDto> getAllUsers();
 
     // Return toggle with specified id.
-    public User getUserById(int userid);
+    public UserDto getUserById(Integer userid);
 
     // Add toggle to the database.
-    public User addUser(User user);
+    public UserDto addUser(UserDto user);
 
     // Update toggle.
-    public User updateUser(User user, int userid);
+    public UserDto updateUser(UserDto user, Integer userid);
 
     // Delete toggle from database.
     public void deleteUser(int userid);

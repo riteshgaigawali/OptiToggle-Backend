@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +27,8 @@ public class Toggle {
     private String name;
     private String description;
     private boolean enabled;
-    private String createdBy;
-    private Date createdOn = new Date();
+    private Date createdOn;
+    @ManyToOne // Many toggles can belong to one user
+    private User user;
 
 }

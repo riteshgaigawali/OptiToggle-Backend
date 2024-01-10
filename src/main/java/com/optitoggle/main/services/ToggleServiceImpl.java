@@ -1,14 +1,20 @@
 package com.optitoggle.main.services;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.optitoggle.main.dao.ToggleDao;
+import com.optitoggle.main.dao.UserDao;
 import com.optitoggle.main.entities.Toggle;
-import com.optitoggle.main.exceptions.ResourceNotFoundEexception;
+import com.optitoggle.main.entities.User;
+import com.optitoggle.main.exceptions.ResourceNotFoundException;
+import com.optitoggle.main.payloads.ToggleDto;
 
 @Service
 public class ToggleServiceImpl implements ToggleService {
@@ -16,47 +22,69 @@ public class ToggleServiceImpl implements ToggleService {
     @Autowired
     private ToggleDao toggleDao;
 
-    // getAllToggle method impl
-    @Override
-    public List<Toggle> getAllToggle() {
-        return toggleDao.findAll();
-    }
+    @Autowired
+    private ModelMapper modelMapper;
 
-    // getToggleById method impl
-    @Override
-    public Toggle getToggleById(int flagId) {
-        return toggleDao.findById(flagId)
-                .orElseThrow(() -> (new ResourceNotFoundEexception("Toggle", "flagId", flagId)));
-    }
+    @Autowired
+    private UserDao userDao;
 
-    // addToggle method impl
     @Override
-    public Toggle addToggle(Toggle toggle) {
-        toggleDao.save(toggle);
-        return toggle;
-    }
-
-    // updateToggle method impl
-    @Override
-    public Toggle updateToggle(Toggle toggle, int flagId) {
-        Toggle updatedToggle = toggleDao.findById(flagId)
-                .orElseThrow(() -> (new ResourceNotFoundEexception("Toggle", "flagId", flagId)));
-        updatedToggle.setKey(toggle.getKey());
-        updatedToggle.setName(toggle.getName());
-        updatedToggle.setDescription(toggle.getDescription());
-        updatedToggle.setEnabled(toggle.isEnabled());
-        updatedToggle.setCreatedBy(toggle.getCreatedBy());
-        toggleDao.save(updatedToggle);
-        return updatedToggle;
+    public List<ToggleDto> getAllToggle() {
+        List<Toggle> toggles = this.toggleDao.findAll();
+        List<ToggleDto> toggleDtos = toggles.stream().map((toggle) -> this.modelMapper.map(toggle, ToggleDto.class))
+                .collect(Collectors.toList());
+        return toggleDtos;
 
     }
 
-    // // deleteToggle mehtod impl
+    @Override
+    public ToggleDto getToggleById(int flagId) {
+        Toggle toggle = this.toggleDao.findById(flagId)
+                .orElseThrow(() -> new ResourceNotFoundException("Toggle", "flagId", flagId));
+        return this.modelMapper.map(toggle, ToggleDto.class);
+    }
+
+    @Override
+    public List<ToggleDto> getTogglesByUser(Integer userid) {
+        User user = this.userDao.findById(userid)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "userid", userid));
+        List<Toggle> toggles = this.toggleDao.findByUser(user);
+        List<ToggleDto> toggleDtos = toggles.stream().map((toggle) -> this.modelMapper.map(toggle, ToggleDto.class))
+                .collect(Collectors.toList());
+        return toggleDtos;
+    }
+
+    @Override
+    public ToggleDto addToggle(ToggleDto toggleDto, Integer userid) {
+
+        User user = this.userDao.findById(userid)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "userid", userid));
+        Toggle toggle = this.modelMapper.map(toggleDto, Toggle.class);
+        toggle.setCreatedOn(new Date());
+        toggle.setUser(user);
+        Toggle toggleCreated = toggleDao.save(toggle);
+        return this.modelMapper.map(toggleCreated, ToggleDto.class);
+
+    }
+
+    @Override
+    public ToggleDto updateToggle(ToggleDto toggleDto, int flagId) {
+        Toggle toggle = this.toggleDao.findById(flagId)
+                .orElseThrow(() -> new ResourceNotFoundException("Toggle", "flagId", flagId));
+        toggle.setKey(toggleDto.getKey());
+        toggle.setName(toggleDto.getName());
+        toggle.setDescription(toggleDto.getDescription());
+        toggle.setEnabled(toggleDto.isEnabled());
+        Toggle toggleUpdated = toggleDao.save(toggle);
+        return this.modelMapper.map(toggleUpdated, ToggleDto.class);
+
+    }
+
     @Override
     public void deleteToggle(int flagId) {
-        Toggle toggle = toggleDao.findById(flagId)
-                .orElseThrow(() -> (new ResourceNotFoundEexception("Toggle", "flagId", flagId)));
-        toggleDao.deleteById(toggle.getFlagId());
+        Toggle toggle = this.toggleDao.findById(flagId)
+                .orElseThrow(() -> new ResourceNotFoundException("Toggle", "flagId", flagId));
+        this.toggleDao.delete(toggle);
     }
 
 }
