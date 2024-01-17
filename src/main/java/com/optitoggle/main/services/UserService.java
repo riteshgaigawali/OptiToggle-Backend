@@ -6,6 +6,9 @@ import com.optitoggle.main.payloads.UserDto;
 public interface UserService {
     // Find implementation of this methods in UserServiceImpl.java file.
 
+    // Register new user.
+    UserDto registerNewUser(UserDto userDto);
+
     // Returns all toggle at once.
     public List<UserDto> getAllUsers();
 

@@ -18,7 +18,7 @@ import com.optitoggle.main.payloads.ApiResponse;
 import com.optitoggle.main.payloads.UserDto;
 import com.optitoggle.main.services.UserService;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/optitoggle")

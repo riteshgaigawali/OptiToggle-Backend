@@ -14,7 +14,7 @@ import com.optitoggle.main.payloads.ApiResponse;
 import com.optitoggle.main.payloads.ToggleDto;
 import com.optitoggle.main.services.ToggleService;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

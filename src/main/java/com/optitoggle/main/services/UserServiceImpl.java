@@ -6,9 +6,12 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.optitoggle.main.dao.RoleDao;
 import com.optitoggle.main.dao.UserDao;
+import com.optitoggle.main.entities.Roles;
 import com.optitoggle.main.entities.User;
 import com.optitoggle.main.exceptions.ResourceNotFoundException;
 import com.optitoggle.main.payloads.UserDto;
@@ -21,6 +24,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleDao roleDao;
 
     // getAllUsers() method implementation
     @Override
@@ -66,6 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
     // deleteUser() method implementation
+
     @Override
     public void deleteUser(int userid) {
         User user = this.userDao.findById(userid)
@@ -81,6 +91,17 @@ public class UserServiceImpl implements UserService {
     public UserDto userToDto(User user) {
         UserDto userDto = this.modelMapper.map(user, UserDto.class);
         return userDto;
+    }
+
+    @Override
+    public UserDto registerNewUser(UserDto userDto) {
+        User user = this.modelMapper.map(userDto, User.class);
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        Roles role = this.roleDao.findById(201).get();
+        user.getRoles().add(role);
+        User newUser = this.userDao.save(user);
+
+        return this.modelMapper.map(newUser, UserDto.class);
     }
 
 }

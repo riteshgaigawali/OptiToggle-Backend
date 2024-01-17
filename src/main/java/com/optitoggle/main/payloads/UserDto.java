@@ -1,10 +1,14 @@
 package com.optitoggle.main.payloads;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import com.optitoggle.main.entities.Roles;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +30,5 @@ public class UserDto {
     private String password;
     private Date createdOn;
 
-    // @NotNull(message = "Role can not be empty !!")
-    // private Set<Roles> roles = new HashSet<>();
+    private Set<Roles> roles = new HashSet<>();
 }
