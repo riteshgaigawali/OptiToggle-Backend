@@ -33,7 +33,7 @@ public class MainApplication implements CommandLineRunner {
 			Roles role = new Roles();
 			role.setRoleId(201);
 			role.setDescription("This is an ADMIN-User");
-			role.setRoleName("ADMIN_USER");
+			role.setRoleName("ADMIN");
 
 			Roles role1 = new Roles();
 			role1.setRoleId(202);

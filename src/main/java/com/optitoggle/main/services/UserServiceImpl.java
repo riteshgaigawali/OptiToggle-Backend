@@ -51,10 +51,13 @@ public class UserServiceImpl implements UserService {
     // addUser() method implementation
     @Override
     public UserDto addUser(UserDto userDto) {
-        User user = this.dtoToUser(userDto);
-        user.setCreatedOn(new Date());
-        User savedUser = this.userDao.save(user);
-        return this.userToDto(savedUser);
+        User user = this.modelMapper.map(userDto, User.class);
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        Roles role = this.roleDao.findById(202).get();
+        user.getRoles().add(role);
+        User newUser = this.userDao.save(user);
+
+        return this.modelMapper.map(newUser, UserDto.class);
     }
 
     // updateUser() method implementation
@@ -66,8 +69,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmailid(userDto.getEmailid());
-        user.setPassword(userDto.getPassword());
-        // user.setRoles(userDto.getRoles());
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 
         User updatedUser = this.userDao.save(user);
         UserDto userDto1 = this.userToDto(updatedUser);
