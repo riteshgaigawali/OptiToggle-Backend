@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto addUser(UserDto userDto) {
         User user = this.modelMapper.map(userDto, User.class);
+        user.setCreatedOn(new Date());
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         Roles role = this.roleDao.findById(202).get();
         user.getRoles().add(role);
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(UserDto userDto, Integer userid) {
         User user = this.userDao.findById(userid)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "userid", userid));
-
+        user.setCreatedOn(new Date());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmailid(userDto.getEmailid());
