@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ public class UserController {
     private UserService userService;
 
     // GET (Get all users)
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
     public ResponseEntity<List<UserDto>> getAllUser() {
 
@@ -36,6 +38,7 @@ public class UserController {
     }
 
     // GET (Get a user by Id)
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("users/{userid}")
     public ResponseEntity<UserDto> getUserById(@PathVariable int userid) {
         return ResponseEntity.ok(this.userService.getUserById(userid));
@@ -43,6 +46,7 @@ public class UserController {
     }
 
     // POST (Add new user)
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/users")
     public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserDto userDto) {
 
@@ -61,6 +65,8 @@ public class UserController {
     }
 
     // // DELETE (Delete existing user)
+
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("users/{userid}")
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable int userid) {
         this.userService.deleteUser(userid);

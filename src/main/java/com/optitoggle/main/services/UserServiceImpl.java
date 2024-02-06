@@ -83,6 +83,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(int userid) {
         User user = this.userDao.findById(userid)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "userid", userid));
+        user.getRoles().clear();
         this.userDao.delete(user);
     }
 
