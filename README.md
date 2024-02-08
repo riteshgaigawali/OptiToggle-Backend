@@ -1,4 +1,4 @@
-# Feature Toggle Management Microservice
+# OptiToggle : Feature Toggle Management Microservice
 
 This project is a feature toggle management microservice built with Java 11 and Spring Boot. It provides a RESTful API for managing feature toggles, also known as feature flags, within an application.
 
