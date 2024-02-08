@@ -25,8 +25,8 @@ This project is a feature toggle management microservice built with Java 11 and 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/feature-toggle-management.git
-   cd feature-toggle-management
+   git clone https://github.com/riteshgaigawali/OptiToggle.git
+   cd OptiToggle
    ```
 
 2. **Database Configuration:**
