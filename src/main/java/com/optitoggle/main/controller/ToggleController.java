@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.optitoggle.main.payloads.ApiResponse;
 import com.optitoggle.main.payloads.ToggleDto;
+import com.optitoggle.main.payloads.ToggleDtoResponse;
 import com.optitoggle.main.services.ToggleService;
+
+import io.swagger.annotations.Api;
 
 import javax.validation.Valid;
 
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/optitoggle")
+@Api(tags = "Toggle Management APIs")
 public class ToggleController {
 
     @Autowired
@@ -31,40 +35,42 @@ public class ToggleController {
 
     // GET -- Get all toggle details.
     @GetMapping("/toggle")
-    public ResponseEntity<List<ToggleDto>> getAllToggle() {
-        List<ToggleDto> toggleDtos = this.toggleService.getAllToggle();
-        return new ResponseEntity<List<ToggleDto>>(toggleDtos, HttpStatus.OK);
+    public ResponseEntity<List<ToggleDtoResponse>> getAllToggle() {
+        List<ToggleDtoResponse> toggleDtoResponses = this.toggleService.getAllToggle();
+        return new ResponseEntity<List<ToggleDtoResponse>>(toggleDtoResponses, HttpStatus.OK);
 
     }
 
     // GET -- Get toggle by id.
     @GetMapping("toggle/{flagId}")
-    public ResponseEntity<ToggleDto> getToggleById(@PathVariable int flagId) {
-        ToggleDto toggleDto = this.toggleService.getToggleById(flagId);
-        return new ResponseEntity<ToggleDto>(toggleDto, HttpStatus.OK);
+    public ResponseEntity<ToggleDtoResponse> getToggleById(@PathVariable int flagId) {
+        ToggleDtoResponse toggleDtoResponse = this.toggleService.getToggleById(flagId);
+        return new ResponseEntity<ToggleDtoResponse>(toggleDtoResponse, HttpStatus.OK);
     }
 
     // GET -- Get toggle of particular user
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("user/{userid}/toggle")
-    public ResponseEntity<List<ToggleDto>> getToggleByUser(@PathVariable Integer userid) {
-        List<ToggleDto> toggles = this.toggleService.getTogglesByUser(userid);
-        return new ResponseEntity<List<ToggleDto>>(toggles, HttpStatus.OK);
+    public ResponseEntity<List<ToggleDtoResponse>> getToggleByUser(@PathVariable Integer userid) {
+        List<ToggleDtoResponse> toggles = this.toggleService.getTogglesByUser(userid);
+        return new ResponseEntity<List<ToggleDtoResponse>>(toggles, HttpStatus.OK);
     }
 
     // POST -- Add toggle.
     @PostMapping(path = "user/{userid}/toggle", consumes = "application/json")
-    public ResponseEntity<ToggleDto> addToggle(@Valid @RequestBody ToggleDto toggleDto, @PathVariable Integer userid) {
-        ToggleDto toggleAdded = this.toggleService.addToggle(toggleDto, userid);
-        return new ResponseEntity<ToggleDto>(toggleAdded, HttpStatus.CREATED);
+    public ResponseEntity<ToggleDtoResponse> addToggle(@Valid @RequestBody ToggleDto toggleDto,
+            @PathVariable Integer userid) {
+        ToggleDtoResponse toggleAdded = this.toggleService.addToggle(toggleDto, userid);
+        return new ResponseEntity<ToggleDtoResponse>(toggleAdded, HttpStatus.CREATED);
 
     }
 
     // PUT -- Update toggle
     @PutMapping("/toggle/{flagId}")
-    public ResponseEntity<ToggleDto> updateToggle(@Valid @RequestBody ToggleDto toggleDto, @PathVariable int flagId) {
-        ToggleDto updatedToggle = this.toggleService.updateToggle(toggleDto, flagId);
-        return new ResponseEntity<ToggleDto>(updatedToggle, HttpStatus.OK);
+    public ResponseEntity<ToggleDtoResponse> updateToggle(@Valid @RequestBody ToggleDto toggleDto,
+            @PathVariable int flagId) {
+        ToggleDtoResponse updatedToggle = this.toggleService.updateToggle(toggleDto, flagId);
+        return new ResponseEntity<ToggleDtoResponse>(updatedToggle, HttpStatus.OK);
     }
 
     // DELETE -- Delete toggle

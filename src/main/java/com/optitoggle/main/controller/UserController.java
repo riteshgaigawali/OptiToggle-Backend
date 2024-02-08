@@ -17,12 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.optitoggle.main.payloads.ApiResponse;
 import com.optitoggle.main.payloads.UserDto;
+import com.optitoggle.main.payloads.UserDtoResponse;
 import com.optitoggle.main.services.UserService;
+
+import io.swagger.annotations.Api;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/optitoggle")
+@Api(tags = "User Management APIs")
 public class UserController {
 
     @Autowired
@@ -31,7 +35,7 @@ public class UserController {
     // GET (Get all users)
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
-    public ResponseEntity<List<UserDto>> getAllUser() {
+    public ResponseEntity<List<UserDtoResponse>> getAllUser() {
 
         return ResponseEntity.ok(this.userService.getAllUsers());
 
@@ -40,7 +44,7 @@ public class UserController {
     // GET (Get a user by Id)
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("users/{userid}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable int userid) {
+    public ResponseEntity<UserDtoResponse> getUserById(@PathVariable int userid) {
         return ResponseEntity.ok(this.userService.getUserById(userid));
 
     }
@@ -48,7 +52,7 @@ public class UserController {
     // POST (Add new user)
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/users")
-    public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDtoResponse> addUser(@Valid @RequestBody UserDto userDto) {
 
         try {
             return new ResponseEntity<>(this.userService.addUser(userDto), HttpStatus.CREATED);
@@ -59,8 +63,9 @@ public class UserController {
 
     // PUT (Update existing user)
     @PutMapping("/users/{userid}")
-    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable int userid) {
-        UserDto updatedUser = this.userService.updateUser(userDto, userid);
+    public ResponseEntity<UserDtoResponse> updateUser(@Valid @RequestBody UserDto userDto,
+            @PathVariable int userid) {
+        UserDtoResponse updatedUser = this.userService.updateUser(userDto, userid);
         return ResponseEntity.ok(updatedUser);
     }
 

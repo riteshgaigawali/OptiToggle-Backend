@@ -15,6 +15,7 @@ import com.optitoggle.main.entities.Toggle;
 import com.optitoggle.main.entities.User;
 import com.optitoggle.main.exceptions.ResourceNotFoundException;
 import com.optitoggle.main.payloads.ToggleDto;
+import com.optitoggle.main.payloads.ToggleDtoResponse;
 
 @Service
 public class ToggleServiceImpl implements ToggleService {
@@ -29,33 +30,35 @@ public class ToggleServiceImpl implements ToggleService {
     private UserDao userDao;
 
     @Override
-    public List<ToggleDto> getAllToggle() {
+    public List<ToggleDtoResponse> getAllToggle() {
         List<Toggle> toggles = this.toggleDao.findAll();
-        List<ToggleDto> toggleDtos = toggles.stream().map((toggle) -> this.modelMapper.map(toggle, ToggleDto.class))
+        List<ToggleDtoResponse> toggleDtoResponses = toggles.stream()
+                .map((toggle) -> this.modelMapper.map(toggle, ToggleDtoResponse.class))
                 .collect(Collectors.toList());
-        return toggleDtos;
+        return toggleDtoResponses;
 
     }
 
     @Override
-    public ToggleDto getToggleById(int flagId) {
+    public ToggleDtoResponse getToggleById(int flagId) {
         Toggle toggle = this.toggleDao.findById(flagId)
                 .orElseThrow(() -> new ResourceNotFoundException("Toggle", "flagId", flagId));
-        return this.modelMapper.map(toggle, ToggleDto.class);
+        return this.modelMapper.map(toggle, ToggleDtoResponse.class);
     }
 
     @Override
-    public List<ToggleDto> getTogglesByUser(Integer userid) {
+    public List<ToggleDtoResponse> getTogglesByUser(Integer userid) {
         User user = this.userDao.findById(userid)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "userid", userid));
         List<Toggle> toggles = this.toggleDao.findByUser(user);
-        List<ToggleDto> toggleDtos = toggles.stream().map((toggle) -> this.modelMapper.map(toggle, ToggleDto.class))
+        List<ToggleDtoResponse> toggleDtoResponses = toggles.stream()
+                .map((toggle) -> this.modelMapper.map(toggle, ToggleDtoResponse.class))
                 .collect(Collectors.toList());
-        return toggleDtos;
+        return toggleDtoResponses;
     }
 
     @Override
-    public ToggleDto addToggle(ToggleDto toggleDto, Integer userid) {
+    public ToggleDtoResponse addToggle(ToggleDto toggleDto, Integer userid) {
 
         User user = this.userDao.findById(userid)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "userid", userid));
@@ -63,12 +66,12 @@ public class ToggleServiceImpl implements ToggleService {
         toggle.setCreatedOn(new Date());
         toggle.setUser(user);
         Toggle toggleCreated = toggleDao.save(toggle);
-        return this.modelMapper.map(toggleCreated, ToggleDto.class);
+        return this.modelMapper.map(toggleCreated, ToggleDtoResponse.class);
 
     }
 
     @Override
-    public ToggleDto updateToggle(ToggleDto toggleDto, int flagId) {
+    public ToggleDtoResponse updateToggle(ToggleDto toggleDto, int flagId) {
         Toggle toggle = this.toggleDao.findById(flagId)
                 .orElseThrow(() -> new ResourceNotFoundException("Toggle", "flagId", flagId));
         toggle.setKey(toggleDto.getKey());
@@ -76,7 +79,7 @@ public class ToggleServiceImpl implements ToggleService {
         toggle.setDescription(toggleDto.getDescription());
         toggle.setEnabled(toggleDto.isEnabled());
         Toggle toggleUpdated = toggleDao.save(toggle);
-        return this.modelMapper.map(toggleUpdated, ToggleDto.class);
+        return this.modelMapper.map(toggleUpdated, ToggleDtoResponse.class);
 
     }
 

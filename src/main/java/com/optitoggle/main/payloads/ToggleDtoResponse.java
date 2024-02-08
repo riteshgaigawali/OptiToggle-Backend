@@ -10,13 +10,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ToggleDto {
+public class ToggleDtoResponse {
 
+    private int flagId;
     @NotEmpty(message = "Key can not be empty !!")
     private String key;
     @NotEmpty(message = "Name can not be empty !!")
     private String name;
     private String description;
     private boolean enabled;
+    private Date createdOn;
 
 }

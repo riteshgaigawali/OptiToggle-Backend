@@ -1,7 +1,5 @@
 package com.optitoggle.main.controller;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +17,15 @@ import com.optitoggle.main.exceptions.ApiException;
 import com.optitoggle.main.payloads.JwtAuthRequest;
 import com.optitoggle.main.payloads.JwtAuthResponse;
 import com.optitoggle.main.payloads.UserDto;
+import com.optitoggle.main.payloads.UserDtoResponse;
 import com.optitoggle.main.security.JwtTokenHelper;
 import com.optitoggle.main.services.UserService;
 
+import io.swagger.annotations.Api;
+
 @RestController
 @RequestMapping("/api/v1/auth/")
+@Api(tags = "Authentication APIs")
 public class AuthControler {
 
     @Autowired
@@ -65,9 +67,8 @@ public class AuthControler {
 
     // register new user endpoint
     @PostMapping("/register")
-    public ResponseEntity<UserDto> registerNewUser(@RequestBody UserDto userDto) {
-        userDto.setCreatedOn(new Date());
-        UserDto registeredUser = this.userService.registerNewUser(userDto);
-        return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
+    public ResponseEntity<UserDtoResponse> registerNewUser(@RequestBody UserDto userDto) {
+        UserDtoResponse registeredUser = this.userService.registerNewUser(userDto);
+        return new ResponseEntity<UserDtoResponse>(registeredUser, HttpStatus.CREATED);
     }
 }
