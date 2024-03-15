@@ -1,7 +1,5 @@
 package com.optitoggle.main.payloads;
 
-import java.util.Date;
-
 import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

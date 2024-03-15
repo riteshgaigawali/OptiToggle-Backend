@@ -1,5 +1,7 @@
 package com.optitoggle.main.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,7 +69,7 @@ public class AuthControler {
 
     // register new user endpoint
     @PostMapping("/register")
-    public ResponseEntity<UserDtoResponse> registerNewUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDtoResponse> registerNewUser(@Valid @RequestBody UserDto userDto) {
         UserDtoResponse registeredUser = this.userService.registerNewUser(userDto);
         return new ResponseEntity<UserDtoResponse>(registeredUser, HttpStatus.CREATED);
     }

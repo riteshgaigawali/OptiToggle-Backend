@@ -13,14 +13,15 @@ import lombok.Setter;
 @Setter
 public class UserDto {
 
-    @NotEmpty(message = "Name can not be empty !!")
+    @NotEmpty(message = "First name can't be empty !")
     private String firstName;
-    @NotEmpty(message = "Name can not be empty !!")
+    @NotEmpty(message = "Last name can't be empty !")
     private String lastName;
-    @Email(message = "Email address is not valid !!")
+    @Email(message = "Email address is not valid !")
+    @NotEmpty(message = "Email can't be empty !")
     private String emailid;
-    @NotEmpty
-    @Size(min = 3, max = 10, message = "Password must be min 3 charecters or max 10 charecters long !!")
+    @NotEmpty(message = "Password can't be empty !")
+    @Size(min = 3, max = 10, message = "Password must be min 3 charecters or max 10 charecters long !")
     private String password;
 
 }
