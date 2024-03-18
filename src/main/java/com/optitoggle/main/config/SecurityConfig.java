@@ -45,7 +45,7 @@ public class SecurityConfig {
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                http
+                http.headers().frameOptions().disable().and()
                                 .authorizeHttpRequests(requests -> requests
                                                 .antMatchers(PUBLIC_URLS)
                                                 .permitAll()
