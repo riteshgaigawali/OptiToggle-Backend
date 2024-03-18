@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Loading user from database with username
         User user = this.userDao.findByEmailid(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "emailid" + username, 0));
+                .orElseThrow(() -> new ResourceNotFoundException("User", "emailid " + username, 404));
 
         return user;
     }

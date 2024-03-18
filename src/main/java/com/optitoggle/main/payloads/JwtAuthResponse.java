@@ -7,4 +7,6 @@ public class JwtAuthResponse {
 
     private String token;
 
+    private UserDtoResponse userDtoResponse;
+
 }
