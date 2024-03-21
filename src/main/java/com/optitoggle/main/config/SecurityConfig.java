@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -32,7 +33,7 @@ import com.optitoggle.main.security.JwtAuthenticationFilter;
 public class SecurityConfig {
 
         private static final String[] PUBLIC_URLS = { "/api/v1/auth/**", "/v3/api-docs", "/v2/api-docs",
-                        "/swagger-resources/**", "/swagger-ui/**", "/webjars/**", "/optitoggle/toggle/{flagId}" };
+                        "/swagger-resources/**", "/swagger-ui/**", "/webjars/**" };
 
         @Autowired
         private CustomUserDetailsService customUserDetailsService;
@@ -48,7 +49,7 @@ public class SecurityConfig {
                 http.headers().frameOptions().disable().and()
                                 .authorizeHttpRequests(requests -> requests
                                                 .antMatchers(PUBLIC_URLS)
-                                                .permitAll()
+                                                .permitAll().antMatchers(HttpMethod.GET).permitAll()
                                                 .anyRequest()
                                                 .authenticated())
                                 .csrf(AbstractHttpConfigurer::disable)
@@ -101,6 +102,8 @@ public class SecurityConfig {
                 urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
                 FilterRegistrationBean bean = new FilterRegistrationBean<>(
                                 new CorsFilter(urlBasedCorsConfigurationSource));
+
+                bean.setOrder(-110);
                 return bean;
         }
 

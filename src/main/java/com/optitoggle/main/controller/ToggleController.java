@@ -49,7 +49,7 @@ public class ToggleController {
     }
 
     // GET -- Get toggle of particular user
-    @PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping("user/{userid}/toggle")
     public ResponseEntity<List<ToggleDtoResponse>> getToggleByUser(@PathVariable Integer userid) {
         List<ToggleDtoResponse> toggles = this.toggleService.getTogglesByUser(userid);
@@ -74,7 +74,7 @@ public class ToggleController {
     }
 
     // DELETE -- Delete toggle
-    @PreAuthorize("hasRole('ADMIN')")
+
     @DeleteMapping("toggle/{flagId}")
     public ResponseEntity<ApiResponse> deleteToggle(@PathVariable int flagId) {
         this.toggleService.deleteToggle(flagId);

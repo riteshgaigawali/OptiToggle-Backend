@@ -33,7 +33,7 @@ public class UserController {
     private UserService userService;
 
     // GET (Get all users)
-    @PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping("/users")
     public ResponseEntity<List<UserDtoResponse>> getAllUser() {
 
@@ -42,7 +42,7 @@ public class UserController {
     }
 
     // GET (Get a user by Id)
-    @PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping("users/{userid}")
     public ResponseEntity<UserDtoResponse> getUserById(@PathVariable int userid) {
         return ResponseEntity.ok(this.userService.getUserById(userid));
@@ -50,7 +50,7 @@ public class UserController {
     }
 
     // POST (Add new user)
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PostMapping("/users")
     public ResponseEntity<UserDtoResponse> addUser(@Valid @RequestBody UserDto userDto) {
 
@@ -71,7 +71,6 @@ public class UserController {
 
     // // DELETE (Delete existing user)
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("users/{userid}")
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable int userid) {
         this.userService.deleteUser(userid);
