@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmailid(userDto.getEmailid());
-        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        user.setPassword(this.passwordEncoder.encode(userDto.getPassword()));
         User updatedUser = this.userDao.save(user);
         UserDtoResponse userDtoResponse = this.userToDto(updatedUser);
         return userDtoResponse;
