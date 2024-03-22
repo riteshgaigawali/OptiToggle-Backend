@@ -75,6 +75,7 @@ public class ToggleController {
 
     // DELETE -- Delete toggle
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("toggle/{flagId}")
     public ResponseEntity<ApiResponse> deleteToggle(@PathVariable int flagId) {
         this.toggleService.deleteToggle(flagId);
