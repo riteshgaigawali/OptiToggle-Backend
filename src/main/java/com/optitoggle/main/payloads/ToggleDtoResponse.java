@@ -19,6 +19,7 @@ public class ToggleDtoResponse {
     private String name;
     private String description;
     private boolean enabled;
+    private String optionalField;
     private Date createdOn;
 
 }

@@ -78,6 +78,7 @@ public class ToggleServiceImpl implements ToggleService {
         toggle.setName(toggleDto.getName());
         toggle.setDescription(toggleDto.getDescription());
         toggle.setEnabled(toggleDto.isEnabled());
+        toggle.setOptionalField(toggleDto.getOptionalField());
         Toggle toggleUpdated = toggleDao.save(toggle);
         return this.modelMapper.map(toggleUpdated, ToggleDtoResponse.class);
 
