@@ -55,18 +55,20 @@ The OptiToggle Backend is a RESTful API for managing feature toggles and user in
 ## API Endpoints
 
 **Authentication**
-POST /api/v1/auth/register - Register a new user.
-POST /api/v1/auth/login - Authenticate a user and return a JWT token.
+- POST /api/v1/auth/register - Register a new user.
+- POST /api/v1/auth/login - Authenticate a user and return a JWT token.
+  
 **Users**
-GET /optitoggle/users - Get a list of all users.
-POST /optitoggle/users - Create a new user.
-PUT /optitoggle/users/{id} - Update an existing user.
-DELETE /optitoggle/users/{id} - Delete a user by ID.
+- GET /optitoggle/users - Get a list of all users.
+- POST /optitoggle/users - Create a new user.
+- PUT /optitoggle/users/{id} - Update an existing user.
+- DELETE /optitoggle/users/{id} - Delete a user by ID.
+  
 **Feature Toggles**
-GET /optitoggle/toggle - Get a list of all feature toggles.
-POST /optitoggle/user/{userId}/toggle - Create a new feature toggle for a user.
-PUT /optitoggle/toggle/{flagId} - Update an existing feature toggle.
-DELETE /optitoggle/toggle/{flagId} - Delete a feature toggle by ID.
+- GET /optitoggle/toggle - Get a list of all feature toggles.
+- POST /optitoggle/user/{userId}/toggle - Create a new feature toggle for a user.
+- PUT /optitoggle/toggle/{flagId} - Update an existing feature toggle.
+- DELETE /optitoggle/toggle/{flagId} - Delete a feature toggle by ID.
 
 ## Testing
 For API testing, you can use tools like Postman or cURL to make requests to the endpoints. Ensure that the server is running before performing tests.
