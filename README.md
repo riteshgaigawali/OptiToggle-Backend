@@ -5,7 +5,7 @@ The OptiToggle Backend is a RESTful API for managing feature toggles and user in
 
 ## Technologies Used
 
-- Java 17
+- Java 11
 - Spring Boot
 - MySQL 8
 
@@ -40,7 +40,7 @@ The database schema for the OptiToggle backend is as follows:
 
 ### Prerequisites
 
-- Java 17
+- Java 11
 - Maven
 - MySQL Server
 
