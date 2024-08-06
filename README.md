@@ -26,79 +26,15 @@ The OptiToggle Backend is a RESTful API for managing feature toggles and user in
 ## Database Schema
 
 The database schema for the OptiToggle backend is as follows:
+-
+- ![01 Database](https://github.com/user-attachments/assets/d2a40fe7-3d3e-46d6-b43e-55214bd6d883)
+-
+- ![02 Tables](https://github.com/user-attachments/assets/e8a5385e-5745-4fdc-8919-34480767eb06)
+-
+- ![03 Columns](https://github.com/user-attachments/assets/cf8a25b1-4eb8-4677-acfa-fdd998e9ff9b)
+-
+- ![04 Indexes](https://github.com/user-attachments/assets/80132a34-3a77-4575-9c0e-4f730e895cac)
 
-```sql
-CREATE DATABASE ffsvc;
-USE ffsvc;
-
-CREATE TABLE `users` (
-  `userid` INT AUTO_INCREMENT PRIMARY KEY,
-  `fname` VARCHAR(255) NOT NULL,
-  `lname` VARCHAR(255) NOT NULL,
-  `emailid` VARCHAR(255) UNIQUE NOT NULL,
-  `pswd` VARCHAR(255) NOT NULL,
-  `createdOn` DATETIME
-);
-
-CREATE TABLE `roles` (
-  `roleid` INT AUTO_INCREMENT PRIMARY KEY,
-  `rolename` VARCHAR(255) NOT NULL,
-  `description` VARCHAR(255) NOT NULL,
-  `isDeleted` BOOLEAN
-);
-
-CREATE TABLE `user_roles` (
-  `roleid` INT NOT NULL,
-  `userid` INT NOT NULL,
-  PRIMARY KEY (`roleid`, `userid`)
-);
-
-CREATE TABLE `feature_flags` (
-  `flagid` INT AUTO_INCREMENT PRIMARY KEY,
-  `key` VARCHAR(255) NOT NULL,
-  `name` VARCHAR(255) NOT NULL,
-  `description` TEXT,
-  `enabled` BOOLEAN NOT NULL,
-  `createdBy` INT NOT NULL,
-  `createdOn` DATETIME
-);
-
-CREATE TABLE `evaluation_history` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `flagid` INT NOT NULL,
-  `modifiedBy` INT NOT NULL,
-  `modifiedOn` DATETIME,
-  `oldvalue` BOOLEAN,
-  `newvalue` BOOLEAN
-);
-
-CREATE TABLE `api_keys` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `apikey` VARCHAR(255) UNIQUE NOT NULL,
-  `createdBy` INT NOT NULL,
-  `createdOn` DATETIME,
-  `expiresOn` DATETIME,
-  `isDeleted` BOOLEAN
-);
-
-CREATE TABLE `access_logs` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `apikey` VARCHAR(255) NOT NULL,
-  `flagid` INT NOT NULL,
-  `accessedOn` DATETIME,
-  `evaluation` BOOLEAN,
-  `accessedByIP` VARCHAR(255) NOT NULL
-);
-
-ALTER TABLE `user_roles` ADD FOREIGN KEY (`userid`) REFERENCES `users` (`userid`);
-ALTER TABLE `user_roles` ADD FOREIGN KEY (`roleid`) REFERENCES `roles` (`roleid`);
-ALTER TABLE `feature_flags` ADD FOREIGN KEY (`createdBy`) REFERENCES `users` (`userid`);
-ALTER TABLE `evaluation_history` ADD FOREIGN KEY (`flagid`) REFERENCES `feature_flags` (`flagid`);
-ALTER TABLE `evaluation_history` ADD FOREIGN KEY (`modifiedBy`) REFERENCES `users` (`userid`);
-ALTER TABLE `access_logs` ADD FOREIGN KEY (`apikey`) REFERENCES `api_keys` (`apikey`);
-ALTER TABLE `api_keys` ADD FOREIGN KEY (`createdBy`) REFERENCES `users` (`userid`);
-ALTER TABLE `access_logs` ADD FOREIGN KEY (`flagid`) REFERENCES `feature_flags` (`flagid`);
-```
 
 ## Setup and Installation
 
