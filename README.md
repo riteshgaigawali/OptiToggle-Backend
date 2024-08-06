@@ -1,6 +1,3 @@
-Here’s the updated `README.md` file with the database schema included:
-
----
 
 # OptiToggle Backend
 
