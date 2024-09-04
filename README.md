@@ -27,13 +27,8 @@ The OptiToggle Backend is a RESTful API for managing feature toggles and user in
 
 The database schema for the OptiToggle backend is as follows:
 -
-- ![01 Database](https://github.com/user-attachments/assets/d2a40fe7-3d3e-46d6-b43e-55214bd6d883)
--
-- ![02 Tables](https://github.com/user-attachments/assets/e8a5385e-5745-4fdc-8919-34480767eb06)
--
-- ![03 Columns](https://github.com/user-attachments/assets/cf8a25b1-4eb8-4677-acfa-fdd998e9ff9b)
--
-- ![04 Indexes](https://github.com/user-attachments/assets/80132a34-3a77-4575-9c0e-4f730e895cac)
+![ER Diagram](https://github.com/user-attachments/assets/9223afd6-05bd-4d5d-b809-df2362a6f028)
+
 
 
 ## Setup and Installation
@@ -43,6 +38,9 @@ The database schema for the OptiToggle backend is as follows:
 - Java 11
 - Maven
 - MySQL Server
+
+## Working Demo
+https://drive.google.com/file/d/18pHbEH2nTthISl605vTIH-reE1qb_N7e/view?usp=sharing
 
 1. **Clone the repository:**
    ```bash
